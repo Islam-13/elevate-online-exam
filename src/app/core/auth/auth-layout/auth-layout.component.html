@@ -1,0 +1,74 @@
+<section class="flex">
+  <div
+    class="bg-[#F0F4FC] hidden md:block w-1/2 p-8 rounded-r-[100px] shadow-[0px_5px_100px_0px_rgba(0,0,0,0.1)]"
+  >
+    <app-auth-heading />
+
+    <div class="w-[min(408px,100%)]">
+      <img src="images/bro.svg" alt="auth-image" />
+    </div>
+  </div>
+
+  <div class="md:w-1/2 mx-auto p-8 grid">
+    <nav>
+      <ul class="flex flex-wrap justify-end gap-5 lg:gap-12 mb-8">
+        <li>
+          <select
+            name=""
+            id=""
+            class="text-lg lg:text-xl focus:outline-main cursor-pointer"
+          >
+            <option value="en">English</option>
+            <option value="ar">Arabic</option>
+          </select>
+        </li>
+
+        <li>
+          <a
+            routerLink="/auth/login"
+            class="text-main text-lg lg:text-xl font-bold"
+            >Sign in</a
+          >
+        </li>
+
+        <li>
+          <a
+            routerLink="/auth"
+            class="text-main text-lg lg:text-xl border border-brdr-clr rounded-2xl py-2 px-6 shadow-light"
+            >Register</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <div class="w-[min(410px,100%)] m-auto">
+      <app-auth-heading class="md:hidden" />
+
+      <router-outlet />
+
+      <div
+        class="relative border-t border-[#E7E7E7] my-8 min-w-fit text-sm md:text-base"
+      >
+        <p
+          class="absolute left-[50%] top-[50%] transform-[translate(-50%,-50%)] bg-white px-1.5 text-[#6C737F]"
+        >
+          Or Continue with
+        </p>
+      </div>
+
+      <ul class="flex flex-wrap gap-5 md:gap-8 justify-center items-center">
+        @for (icon of icons; track icon.name) {
+        <li>
+          <a
+            [href]="icon.href"
+            target="_blank"
+            class="w-16 h-16 flex items-center justify-center border border-brdr-clr rounded-2xl"
+          >
+            <img [src]="icon.src" [alt]="icon.name" />
+          </a>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>

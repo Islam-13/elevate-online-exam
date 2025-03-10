@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins/Poppins-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@theme {
+  --color-main: #4461f2;
+  --color-brdr-clr: #e0e0e9;
+  --shadow-light: 0px 10px 30px 0px rgba(68, 97, 242, 0.05);
+}
+
+body {
+  font-family: "Poppins";
+}
+
+button {
+  cursor: pointer;
+}
+
+.form__control {
+  @apply rounded-[10px] border border-brdr-clr py-4 px-3 bg-[#F9F9F9] text-sm focus:outline-main shadow-light;
+}
+
+.submit-btn {
+  @apply mt-10 rounded-[20px] bg-main p-2 w-full text-white;
+}
