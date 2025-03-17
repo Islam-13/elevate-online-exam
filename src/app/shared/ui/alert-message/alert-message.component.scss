@@ -1,0 +1,77 @@
+/* ===== alert notification ===== */
+.alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 11;
+
+  .toast {
+    position: relative;
+    padding: 8px;
+    margin-bottom: 10px;
+    width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    color: #fff;
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    --color: #0abf30;
+    background-color: #000;
+    background-image: linear-gradient(to right, #0abf3055, #22242f 30%);
+    animation: showAlert 1s linear 1 forwards;
+
+    &.error {
+      --color: red;
+      background-image: linear-gradient(to right, #ff4e4e55, #22242f 30%);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--color);
+      box-shadow: 0 0 10px var(--color);
+      animation: timeOut 3s 1s linear 1 forwards;
+    }
+
+    i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--color);
+    }
+
+    .toast-content {
+      h3 {
+        margin-bottom: 5px;
+        text-transform: capitalize;
+        letter-spacing: 0.5px;
+      }
+
+      p {
+        font-size: 13px;
+        opacity: 0.75;
+      }
+    }
+  }
+}
+
+@keyframes showAlert {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes timeOut {
+  to {
+    width: 0;
+  }
+}

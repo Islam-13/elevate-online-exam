@@ -1,43 +1,152 @@
-<form action="">
+<form [formGroup]="registerForm" (ngSubmit)="register()">
   <h2 class="text-2xl font-bold mt-7">Sign up</h2>
 
   <div class="mb-4 mt-8 flex flex-col gap-8">
-    <input type="text" class="form__control" placeholder="First Name" />
-
-    <input type="text" class="form__control" placeholder="Last Name" />
-
-    <input type="email" class="form__control" placeholder="Email" />
-
-    <div class="relative">
+    <!-- First name Input -->
+    <div>
+      @let fNameCtrl = registerForm.get("firstName");
       <input
-        type="password"
-        class="form__control w-full"
-        placeholder="Password"
+        type="text"
+        class="form__control"
+        placeholder="First Name"
+        formControlName="firstName"
       />
 
-      <button>
-        <img
-          src="icons/eye.svg"
-          alt="eye icons"
-          class="absolute right-2.5 top-[50%] translate-y-[-50%]"
-        />
-      </button>
+      @if (fNameCtrl?.errors && fNameCtrl?.touched) { @if
+      (fNameCtrl?.getError("required")) {
+      <app-ctrl-err>First Name is required!</app-ctrl-err>
+      } @else if (fNameCtrl?.getError("minlength") ||
+      fNameCtrl?.getError("maxlength")) {
+      <app-ctrl-err>At least 3 chars and up to 15 chars long.</app-ctrl-err>
+      } }
     </div>
 
-    <div class="relative">
+    <!-- Last name Input -->
+    <div>
+      @let lNameCtrl = registerForm.get("lastName");
       <input
-        type="password"
-        class="form__control w-full"
-        placeholder="Confirm Password"
+        type="text"
+        class="form__control"
+        placeholder="Last Name"
+        formControlName="lastName"
       />
 
-      <button>
-        <img
-          src="icons/eye.svg"
-          alt="eye icons"
-          class="absolute right-2.5 top-[50%] translate-y-[-50%]"
+      @if (lNameCtrl?.errors && lNameCtrl?.touched) { @if
+      (lNameCtrl?.getError("required")) {
+      <app-ctrl-err>Last Name is required!</app-ctrl-err>
+      } @else if (lNameCtrl?.getError("minlength") ||
+      lNameCtrl?.getError("maxlength")) {
+      <app-ctrl-err>At least 3 chars and up to 15 chars long.</app-ctrl-err>
+      } }
+    </div>
+
+    <!-- User name Input -->
+    <input
+      type="hidden"
+      [value]="registerForm.controls['firstName'].value"
+      formControlName="username"
+    />
+
+    <!-- Email Input -->
+    <div>
+      @let emailCtrl = registerForm.get("email");
+      <input
+        type="email"
+        class="form__control"
+        placeholder="Email"
+        formControlName="email"
+      />
+
+      @if (emailCtrl?.errors && emailCtrl?.touched) { @if
+      (emailCtrl?.getError("required")) {
+      <app-ctrl-err>Email is required!</app-ctrl-err>
+      } @else if (emailCtrl?.getError("email")) {
+      <app-ctrl-err>Email is invalid!</app-ctrl-err>
+      } }
+    </div>
+
+    <!-- Password Input -->
+    <div>
+      <div class="relative">
+        @let passwordCtrl = registerForm.get("password");
+        <input
+          [type]="showPassword() ? 'text' : 'password'"
+          class="form__control w-full"
+          placeholder="Password"
+          formControlName="password"
         />
-      </button>
+
+        <button type="button" (click)="togglePassword()">
+          @if (showPassword()) {
+          <i
+            class="fa-solid fa-eye text-[#949BA5] absolute right-2.5 top-[50%] translate-y-[-50%] cursor-pointer"
+          ></i>
+          } @else {
+          <i
+            class="fa-solid fa-eye-slash text-[#949BA5] absolute right-2.5 top-[50%] translate-y-[-50%] cursor-pointer"
+          ></i>
+          }
+        </button>
+      </div>
+
+      @if (passwordCtrl?.errors && passwordCtrl?.touched) { @if
+      (passwordCtrl?.getError("required")) {
+      <app-ctrl-err>Password is required!</app-ctrl-err>
+      } @else if (passwordCtrl?.getError("pattern")) {
+      <app-ctrl-password-err />
+      } }
+    </div>
+
+    <!-- RePassword Input -->
+    <div>
+      <div class="relative">
+        @let rePasswordCtrl = registerForm.get('rePassword');
+        <input
+          [type]="showRePassword() ? 'text' : 'password'"
+          class="form__control w-full"
+          placeholder="Confirm Password"
+          formControlName="rePassword"
+        />
+
+        <button type="button" (click)="toggleRePassword()">
+          @if (showRePassword()) {
+          <i
+            class="fa-solid fa-eye text-[#949BA5] absolute right-2.5 top-[50%] translate-y-[-50%] cursor-pointer"
+          ></i>
+          } @else {
+          <i
+            class="fa-solid fa-eye-slash text-[#949BA5] absolute right-2.5 top-[50%] translate-y-[-50%] cursor-pointer"
+          ></i>
+          }
+        </button>
+      </div>
+
+      @if ((registerForm.errors?.['misMatch'] || rePasswordCtrl?.errors) &&
+      rePasswordCtrl?.touched) { @if (rePasswordCtrl?.getError("required")) {
+      <app-ctrl-err>Confirm Password is required!</app-ctrl-err>
+      } @else if (registerForm.errors?.['misMatch']) {
+      <app-ctrl-err
+        >Password and Confirm Password are not matched!</app-ctrl-err
+      >
+      } }
+    </div>
+
+    <!-- Phone Input -->
+    <div>
+      @let phoneCtrl = registerForm.get('phone');
+      <input
+        type="tel"
+        class="form__control"
+        placeholder="Phone"
+        formControlName="phone"
+      />
+
+      @if (phoneCtrl?.errors && phoneCtrl?.touched) { @if
+      (phoneCtrl?.getError("required")) {
+      <app-ctrl-err>Phone is required!</app-ctrl-err>
+      } @else if (phoneCtrl?.getError("pattern")) {
+      <app-ctrl-err>Invalid phone number.</app-ctrl-err>
+      } }
     </div>
   </div>
 
@@ -46,5 +155,5 @@
     <a routerLink="/auth/login" class="text-main">login</a>
   </p>
 
-  <button class="submit-btn">Create Account</button>
+  <app-submit-btn [isSubmitting]="isSubmitting()">Sign up</app-submit-btn>
 </form>

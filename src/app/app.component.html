@@ -1,1 +1,5 @@
+@if (_toast.message()) {
+<app-alert-message [message]="_toast.message()" [type]="_toast.type()" />
+}
+
 <router-outlet />

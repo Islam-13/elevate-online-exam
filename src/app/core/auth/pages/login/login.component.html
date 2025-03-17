@@ -1,29 +1,63 @@
-<form action="">
+<form [formGroup]="loginForm" (ngSubmit)="login()">
   <h2 class="text-2xl font-bold mt-7">Sign in</h2>
 
   <div class="mb-4 mt-8 flex flex-col gap-8">
-    <input type="email" class="form__control" placeholder="Email" />
+    <!-- Email Input -->
+    <div>
+      @let emailCtrl = loginForm.get("email");
 
-    <div class="relative">
       <input
-        type="password"
-        class="form__control w-full"
-        placeholder="Password"
+        type="email"
+        class="form__control"
+        placeholder="Email*"
+        formControlName="email"
       />
 
-      <button>
-        <img
-          src="icons/eye.svg"
-          alt="eye icons"
-          class="absolute right-2.5 top-[50%] translate-y-[-50%]"
+      @if (emailCtrl?.errors && emailCtrl?.touched) { @if
+      (emailCtrl?.getError("required")) {
+      <app-ctrl-err>Email is required!</app-ctrl-err>
+      } @else if (emailCtrl?.getError("email")) {
+      <app-ctrl-err>Email is invalid!</app-ctrl-err>
+      } }
+    </div>
+
+    <!-- Password Input -->
+    <div>
+      <div class="relative">
+        @let passwordCtrl = loginForm.get("password");
+
+        <input
+          [type]="showPassword() ? 'text' : 'password'"
+          class="form__control"
+          placeholder="Password*"
+          formControlName="password"
         />
-      </button>
+
+        <button type="button" (click)="togglePassword()">
+          @if (showPassword()) {
+          <i
+            class="fa-solid fa-eye text-[#949BA5] absolute right-2.5 top-[50%] translate-y-[-50%] cursor-pointer"
+          ></i>
+          } @else {
+          <i
+            class="fa-solid fa-eye-slash text-[#949BA5] absolute right-2.5 top-[50%] translate-y-[-50%] cursor-pointer"
+          ></i>
+          }
+        </button>
+      </div>
+
+      @if (passwordCtrl?.errors && passwordCtrl?.touched) { @if
+      (passwordCtrl?.getError("required")) {
+      <app-ctrl-err>Password is required!</app-ctrl-err>
+      } @else if (passwordCtrl?.getError("pattern")) {
+      <app-ctrl-password-err />
+      } }
     </div>
   </div>
 
-  <a routerLink="/auth/forget-password" class="text-main block text-end"
+  <a routerLink="/auth/forget-password" class="text-main block w-fit ms-auto"
     >Recover Password?</a
   >
 
-  <button class="submit-btn">Sign in</button>
+  <app-submit-btn [isSubmitting]="isSubmitting()">Sign in</app-submit-btn>
 </form>

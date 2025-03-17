@@ -22,9 +22,17 @@ button {
 }
 
 .form__control {
-  @apply rounded-[10px] border border-brdr-clr py-4 px-3 bg-[#F9F9F9] text-sm focus:outline-main shadow-light;
+  @apply w-full rounded-[10px] border border-brdr-clr py-4 px-3 bg-[#F9F9F9] text-sm  shadow-light focus:outline-main;
+}
+
+input.ng-invalid.ng-touched {
+  @apply border-red-600;
+}
+
+.error-msg {
+  @apply w-fit mt-2 bg-red-100 text-red-700 rounded-[10px] px-4 py-2 text-sm;
 }
 
 .submit-btn {
-  @apply mt-10 rounded-[20px] bg-main p-2 w-full text-white;
+  @apply mt-10 rounded-[20px] bg-main p-2 w-full text-white disabled:cursor-not-allowed disabled:grayscale-75;
 }

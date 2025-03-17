@@ -1,13 +1,31 @@
-<form action="">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <h2 class="text-2xl font-bold mt-7">Verify code</h2>
 
   <div class="mb-4 mt-8 flex flex-col">
-    <input type="text" class="form__control" placeholder="Enter Code" />
+    <!-- Code Input -->
+    <div>
+      @let codeCtrl = form.get("resetCode");
+
+      <input
+        type="text"
+        class="form__control"
+        placeholder="Enter Code"
+        formControlName="resetCode"
+      />
+
+      @if (codeCtrl?.errors && codeCtrl?.touched) { @if
+      (codeCtrl?.getError("required")) {
+      <app-ctrl-err>Code is required!</app-ctrl-err>
+      } @else if (codeCtrl?.getError("minlength") ||
+      codeCtrl?.getError("maxlength")) {
+      <app-ctrl-err>Code must be 6 digits!</app-ctrl-err>
+      } }
+    </div>
   </div>
 
   <p class="text-end">
     Didn't receive a code? <button class="text-main">Resend</button>
   </p>
 
-  <button class="submit-btn">Verify</button>
+  <app-submit-btn [isSubmitting]="isSubmitting()">Verify</app-submit-btn>
 </form>
