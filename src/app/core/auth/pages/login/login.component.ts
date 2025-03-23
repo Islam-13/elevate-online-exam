@@ -1,5 +1,6 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { AuthApiService } from 'authApi';
 import {
   FormControl,
@@ -10,13 +11,11 @@ import {
 
 import { CtrlPasswordErrComponent } from '../../components/ctrl-password-err/ctrl-password-err.component';
 import { CtrlErrComponent } from '../../components/ctrl-err/ctrl-err.component';
-import { LoggedUserService } from '../../../services/logged-user.service';
 import { timer } from 'rxjs';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { SubmitBtnComponent } from '../../../../shared/ui/submit-btn/submit-btn.component';
-
-const passwordRG =
-  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+import { loginAction } from '../../../../store/isLogged.actions';
+import { env } from '../../../../env/env.dev';
 
 @Component({
   selector: 'app-login',
@@ -38,8 +37,8 @@ export class LoginComponent implements OnInit {
   private _authApi = inject(AuthApiService);
   private _destroyRef = inject(DestroyRef);
   private _router = inject(Router);
-  private _loggedUser = inject(LoggedUserService);
   private _toast = inject(ToastService);
+  private _store = inject(Store);
 
   ngOnInit() {
     this.initForm();
@@ -50,7 +49,7 @@ export class LoginComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
-        Validators.pattern(passwordRG),
+        Validators.pattern(env.passwordRG),
       ]),
     });
   }
@@ -59,7 +58,7 @@ export class LoginComponent implements OnInit {
     this.showPassword.update((p) => !p);
   }
 
-  login() {
+  onSubmit() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -73,7 +72,7 @@ export class LoginComponent implements OnInit {
           this._toast.message.set('Logged in successfully!');
 
           localStorage.setItem('loggedToken', res.token);
-          this._loggedUser.saveUser();
+          this._store.dispatch(loginAction({ value: res.token }));
 
           this._router.navigate(['/']);
         },

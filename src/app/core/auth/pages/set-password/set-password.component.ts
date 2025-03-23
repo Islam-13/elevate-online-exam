@@ -11,9 +11,10 @@ import { AuthApiService } from 'authApi';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { env } from '../../../../env/env.dev';
-import { LoggedUserService } from '../../../services/logged-user.service';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { SubmitBtnComponent } from '../../../../shared/ui/submit-btn/submit-btn.component';
+import { loginAction } from '../../../../store/isLogged.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-set-password',
@@ -34,15 +35,11 @@ export class SetPasswordComponent implements OnInit {
   private _authApi = inject(AuthApiService);
   private _destroyRef = inject(DestroyRef);
   private _router = inject(Router);
-  private _loggedUser = inject(LoggedUserService);
   private _toast = inject(ToastService);
+  private _store = inject(Store);
 
   ngOnInit(): void {
     this.initForm();
-  }
-
-  togglePassword() {
-    this.showPassword.update((p) => !p);
   }
 
   initForm() {
@@ -53,6 +50,10 @@ export class SetPasswordComponent implements OnInit {
         Validators.pattern(env.passwordRG),
       ]),
     });
+  }
+
+  togglePassword() {
+    this.showPassword.update((p) => !p);
   }
 
   onSubmit() {
@@ -68,10 +69,10 @@ export class SetPasswordComponent implements OnInit {
           next: (res) => {
             timer(4000).subscribe(() => this._toast.message.set(''));
             this._toast.type.set('success');
-            this._toast.message.set('Password created successfully!');
+            this._toast.message.set('Password has been reset successfully!');
 
             localStorage.setItem('loggedToken', res.token);
-            this._loggedUser.saveUser();
+            this._store.dispatch(loginAction({ value: res.token }));
 
             this._router.navigate(['/']);
           },

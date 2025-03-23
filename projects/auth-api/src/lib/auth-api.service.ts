@@ -7,9 +7,12 @@ import { AuthApiAdaptorService } from './adaptor/authApi.adaptor';
 import { LoginData } from './interfaces/loginData';
 import { LoginRes } from './interfaces/loginRes';
 import { RegisterData } from './interfaces/registerData';
-import { forgetPasswordData } from './interfaces/forgetPasswordData';
-import { Code } from './interfaces/verifyCodeData';
-import { SetPassword } from './interfaces/setPasswordData';
+import {
+  ForgetPasswordData,
+  ForgetPasswordRes,
+} from './interfaces/forgetPasswordData';
+import { Code, CodeRes } from './interfaces/verifyCodeData';
+import { SetPassword, SetPasswordRes } from './interfaces/setPasswordData';
 
 @Injectable({
   providedIn: 'root',
@@ -36,27 +39,26 @@ export class AuthApiService implements AuthApi {
     );
   }
 
-  forgetPassword(data: forgetPasswordData): Observable<any> {
-    return this._http
-      .post(AuthEndPoint.FORGET_PASSWORD, data)
-      .pipe(
-        catchError((err) => throwError(() => new Error('Email is not exist!!')))
-      );
+  forgetPassword(data: ForgetPasswordData): Observable<ForgetPasswordRes> {
+    return this._http.post(AuthEndPoint.FORGET_PASSWORD, data).pipe(
+      map((res: any) => res),
+      catchError((err) => throwError(() => new Error('Email is not exist!!')))
+    );
   }
 
-  verifyCode(data: Code): Observable<any> {
-    return this._http
-      .post(AuthEndPoint.VERIFY_CODE, data)
-      .pipe(catchError((err) => throwError(() => new Error('Invalid code!!'))));
+  verifyCode(data: Code): Observable<CodeRes> {
+    return this._http.post(AuthEndPoint.VERIFY_CODE, data).pipe(
+      map((res: any) => res),
+      catchError((err) => throwError(() => new Error('Invalid code!!')))
+    );
   }
 
-  resetPassword(data: SetPassword): Observable<any> {
-    return this._http
-      .put(AuthEndPoint.RESET_PASSWORD, data)
-      .pipe(
-        catchError((err) =>
-          throwError(() => new Error('Incorrect email or password!!'))
-        )
-      );
+  resetPassword(data: SetPassword): Observable<SetPasswordRes> {
+    return this._http.put(AuthEndPoint.RESET_PASSWORD, data).pipe(
+      map((res: any) => res),
+      catchError((err) =>
+        throwError(() => new Error('Incorrect email or password!!'))
+      )
+    );
   }
 }
