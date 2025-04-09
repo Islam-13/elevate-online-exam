@@ -1,0 +1,16 @@
+<a [routerLink]="['/quizzes', id()]">
+  <div class="relative overflow-clip rounded-rd-sm">
+    <div class="">
+      <img [src]="image()" alt="diploma image" class="w-full h-full" />
+    </div>
+
+    <div
+      class="absolute bottom-7 left-7 right-7 bg-[#1935CA66] rounded-rd-sm p-4 text-white backdrop-blur-xl"
+    >
+      <h5 class="font-bold">{{ title() }}</h5>
+      <p class="font-medium text-xs">
+        Voluptatem aut ut dignissimos blanditiis
+      </p>
+    </div>
+  </div>
+</a>

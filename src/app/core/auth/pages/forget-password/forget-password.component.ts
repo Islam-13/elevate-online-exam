@@ -1,16 +1,24 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  output,
+  signal,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { CtrlErrComponent } from '../../components/ctrl-err/ctrl-err.component';
 import { AuthApiService } from 'authApi';
 import { timer } from 'rxjs';
+
 import { ToastService } from '../../../../shared/services/toast.service';
 import { SubmitBtnComponent } from '../../../../shared/ui/submit-btn/submit-btn.component';
+import { CtrlErrComponent } from '../../../../shared/ui/ctrl-err/ctrl-err.component';
+import { Steps } from '../../../../shared/interfaces/forget-password-steps';
 
 @Component({
   selector: 'app-forget-password',
@@ -21,10 +29,10 @@ import { SubmitBtnComponent } from '../../../../shared/ui/submit-btn/submit-btn.
 export class ForgetPasswordComponent implements OnInit {
   form!: FormGroup;
   isSubmitting = signal<boolean>(false);
+  steps = output<Steps>();
 
   private _authApi = inject(AuthApiService);
   private _destroyRef = inject(DestroyRef);
-  private _router = inject(Router);
   private _toast = inject(ToastService);
 
   ngOnInit() {
@@ -52,7 +60,8 @@ export class ForgetPasswordComponent implements OnInit {
             this._toast.type.set('success');
             this._toast.message.set('Code sent successfully!');
 
-            this._router.navigate(['/auth/verify-code']);
+            this.steps.emit('verify-code');
+            sessionStorage.setItem('forgetEmail', this.form.value.email);
           },
           error: (err) => {
             timer(4000).subscribe(() => this._toast.message.set(''));

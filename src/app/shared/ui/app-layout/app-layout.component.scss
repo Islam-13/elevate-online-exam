@@ -1,0 +1,10 @@
+@media (width >= 768px) {
+  main {
+    display: grid;
+    grid-template-columns: 205px 1fr;
+    grid-template-rows: 62px 1fr;
+    grid-template-areas:
+      "aside search"
+      "aside main";
+  }
+}

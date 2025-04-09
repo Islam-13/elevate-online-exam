@@ -14,10 +14,10 @@
 
       @if (fNameCtrl?.errors && fNameCtrl?.touched) { @if
       (fNameCtrl?.getError("required")) {
-      <app-ctrl-err>First Name is required!</app-ctrl-err>
+      <app-ctrl-err text="First Name is required!" />
       } @else if (fNameCtrl?.getError("minlength") ||
       fNameCtrl?.getError("maxlength")) {
-      <app-ctrl-err>At least 3 chars and up to 15 chars long.</app-ctrl-err>
+      <app-ctrl-err text="At least 3 chars and up to 15 chars long." />
       } }
     </div>
 
@@ -33,19 +33,30 @@
 
       @if (lNameCtrl?.errors && lNameCtrl?.touched) { @if
       (lNameCtrl?.getError("required")) {
-      <app-ctrl-err>Last Name is required!</app-ctrl-err>
+      <app-ctrl-err text="Last Name is required!" />
       } @else if (lNameCtrl?.getError("minlength") ||
       lNameCtrl?.getError("maxlength")) {
-      <app-ctrl-err>At least 3 chars and up to 15 chars long.</app-ctrl-err>
+      <app-ctrl-err text="At least 3 chars and up to 15 chars long." />
       } }
     </div>
 
     <!-- User name Input -->
-    <input
-      type="hidden"
-      [value]="registerForm.controls['firstName'].value"
-      formControlName="username"
-    />
+    <div>
+      @let UNameCtrl = registerForm.get("username");
+      <input
+        type="text"
+        class="form__control"
+        placeholder="User Name"
+        formControlName="username"
+      />
+
+      @if (UNameCtrl?.errors && UNameCtrl?.touched) { @if
+      (UNameCtrl?.getError("required")) {
+      <app-ctrl-err text="User name is required!" />
+      } @else if (UNameCtrl?.getError("minlength") ) {
+      <app-ctrl-err text="At least 3 chars long." />
+      } }
+    </div>
 
     <!-- Email Input -->
     <div>
@@ -59,9 +70,9 @@
 
       @if (emailCtrl?.errors && emailCtrl?.touched) { @if
       (emailCtrl?.getError("required")) {
-      <app-ctrl-err>Email is required!</app-ctrl-err>
+      <app-ctrl-err text="Email is required!" />
       } @else if (emailCtrl?.getError("email")) {
-      <app-ctrl-err>Email is invalid!</app-ctrl-err>
+      <app-ctrl-err text="Email is invalid!" />
       } }
     </div>
 
@@ -91,7 +102,7 @@
 
       @if (passwordCtrl?.errors && passwordCtrl?.touched) { @if
       (passwordCtrl?.getError("required")) {
-      <app-ctrl-err>Password is required!</app-ctrl-err>
+      <app-ctrl-err text="Password is required!" />
       } @else if (passwordCtrl?.getError("pattern")) {
       <app-ctrl-password-err />
       } }
@@ -123,11 +134,9 @@
 
       @if ((registerForm.errors?.['misMatch'] || rePasswordCtrl?.errors) &&
       rePasswordCtrl?.touched) { @if (rePasswordCtrl?.getError("required")) {
-      <app-ctrl-err>Confirm Password is required!</app-ctrl-err>
+      <app-ctrl-err text="Confirm Password is required!" />
       } @else if (registerForm.errors?.['misMatch']) {
-      <app-ctrl-err
-        >Password and Confirm Password are not matched!</app-ctrl-err
-      >
+      <app-ctrl-err text="Password and Confirm Password are not matched!" />
       } }
     </div>
 
@@ -143,9 +152,9 @@
 
       @if (phoneCtrl?.errors && phoneCtrl?.touched) { @if
       (phoneCtrl?.getError("required")) {
-      <app-ctrl-err>Phone is required!</app-ctrl-err>
+      <app-ctrl-err text="Phone is required!" />
       } @else if (phoneCtrl?.getError("pattern")) {
-      <app-ctrl-err>Invalid phone number.</app-ctrl-err>
+      <app-ctrl-err text="Invalid phone number." />
       } }
     </div>
   </div>

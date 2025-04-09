@@ -1,0 +1,95 @@
+@if(isLoading()){
+<div
+  class="fixed w-full h-lvh bg-[rgba(0,0,0,0.3)] backdrop-blur-sm flex items-center justify-center z-10"
+>
+  <span class="loader"></span>
+</div>
+}
+
+<main
+  class="min-h-lvh bg-[#FBF9F9] md:pt-10 md:ps-8 md:pe-20 gap-x-[72px] gap-y-10"
+>
+  <!-- header -->
+  <div
+    class="bg-main h-[62px] flex gap-6 items-center relative md:contents px-4"
+  >
+    <header class="md:fixed">
+      <button (click)="toggleMenu()" class="md:hidden">
+        <img src="icons/menu-icon.svg" alt="Menu Icon" />
+      </button>
+
+      <nav
+        class="bg-white md:bg-transparent py-4 px-4 md:px-0 duration-700 top-full absolute md:static w-full [grid-area:aside] z-10"
+        [class]="isOpen() ? 'left-0' : '-left-full'"
+      >
+        <ul class="relative">
+          <button
+            (click)="closeMenu()"
+            class="absolute top-2 right-2 w-6 h-6 md:hidden"
+          >
+            <img src="icons/close.svg" class="h-full" alt="Close Icon Button" />
+          </button>
+
+          <li class="mb-8 mt-2">
+            <img src="elevate-logo.svg" alt="Elevate Logo" />
+          </li>
+
+          <div class="flex flex-col gap-[26px]">
+            <li>
+              <a
+                routerLink="/"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="px-3 py-2 flex gap-8 font-semibold w-fit rounded-rd-sm duration-500 hover:bg-main group"
+              >
+                <i
+                  class="fa-solid fa-table-columns text-2xl text-main group-hover:text-white"
+                ></i>
+                <span class="text-secondary group-hover:text-white"
+                  >Dashboard</span
+                >
+              </a>
+            </li>
+
+            <li>
+              <a
+                routerLink="/quizes"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="px-3 py-2 flex gap-8 font-semibold w-fit rounded-rd-sm duration-500 hover:bg-main group"
+              >
+                <i
+                  class="fa-solid fa-clock-rotate-left text-2xl text-main group-hover:text-white"
+                ></i>
+                <span class="text-secondary group-hover:text-white"
+                  >Quiz history</span
+                >
+              </a>
+            </li>
+          </div>
+
+          <li>
+            <button
+              (click)="onLogOuut()"
+              class="mt-8 px-3 py-2 flex gap-8 font-semibold w-fit rounded-rd-sm duration-500 hover:bg-main group text-xl"
+            >
+              <i
+                class="fa-solid fa-right-from-bracket text-2xl rotate-180 text-main group-hover:text-white"
+              ></i>
+              <span class="text-secondary group-hover:text-white">Log Out</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="search [grid-area:search] grow">
+      <app-search />
+    </div>
+  </div>
+
+  <!-- content -->
+  <div class="[grid-area:main]">
+    <router-outlet />
+  </div>
+</main>

@@ -8,12 +8,13 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthApiService } from 'authApi';
-import { CtrlErrComponent } from '../../components/ctrl-err/ctrl-err.component';
-import { CtrlPasswordErrComponent } from '../../components/ctrl-password-err/ctrl-password-err.component';
 import { timer } from 'rxjs';
+
 import { env } from '../../../../env/env.dev';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { SubmitBtnComponent } from '../../../../shared/ui/submit-btn/submit-btn.component';
+import { CtrlErrComponent } from '../../../../shared/ui/ctrl-err/ctrl-err.component';
+import { CtrlPasswordErrComponent } from '../../../../shared/ui/ctrl-password-err/ctrl-password-err.component';
 
 function equalValues(form: AbstractControl) {
   const password = form.get('password')?.value;
@@ -49,14 +50,6 @@ export class RegisterComponent {
 
   ngOnInit() {
     this.initForm();
-
-    this.registerForm
-      .get('firstName')
-      ?.valueChanges.subscribe(() => this.updateUserName());
-
-    this.registerForm
-      .get('lastName')
-      ?.valueChanges.subscribe(() => this.updateUserName());
   }
 
   initForm() {
@@ -72,7 +65,10 @@ export class RegisterComponent {
           Validators.minLength(3),
           Validators.maxLength(15),
         ]),
-        username: new FormControl(''),
+        username: new FormControl('', [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
         email: new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', [
           Validators.required,
@@ -86,15 +82,6 @@ export class RegisterComponent {
       },
       { validators: [equalValues] }
     );
-  }
-
-  updateUserName() {
-    const firstName = this.registerForm.get('firstName')?.value || '';
-    const lastName = this.registerForm.get('lastName')?.value || '';
-
-    const username = (firstName + lastName).toLowerCase().trim();
-
-    this.registerForm.get('username')?.setValue(username, { emitEvent: false });
   }
 
   togglePassword() {

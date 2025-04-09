@@ -1,0 +1,16 @@
+<section class="flex flex-col gap-4 md:gap-6">
+  <div class="flex items-center justify-between">
+    <h4 class="text-main text-2xl font-medium">Quizes</h4>
+    <button (click)="onGetAllQuizzes()" class="text-main text-2xl font-medium">
+      View All
+    </button>
+  </div>
+
+  <div
+    class="grid grid-cols-[repeat(auto-fit,minmax(min(305px,100%),1fr))] gap-y-4 md:gap-y-6 gap-x-5"
+  >
+    @for (quiz of quizes(); track quiz._id) {
+    <app-quiz-card [id]="quiz._id" [title]="quiz.name" [image]="quiz.icon" />
+    }
+  </div>
+</section>

@@ -15,17 +15,27 @@
 
       @if (codeCtrl?.errors && codeCtrl?.touched) { @if
       (codeCtrl?.getError("required")) {
-      <app-ctrl-err>Code is required!</app-ctrl-err>
+      <app-ctrl-err text="Code is required!" />
       } @else if (codeCtrl?.getError("minlength") ||
       codeCtrl?.getError("maxlength")) {
-      <app-ctrl-err>Code must be 6 digits!</app-ctrl-err>
+      <app-ctrl-err text="Code must be 6 digits!" />
       } }
     </div>
   </div>
 
   <p class="text-end">
-    Didn't receive a code? <button class="text-main">Resend</button>
+    Didn't receive a code?
+    <button
+      [disabled]="isResending() || isSubmitting()"
+      type="button"
+      (click)="onResend()"
+      class="text-main disabled:cursor-not-allowed disabled:text-gray-500"
+    >
+      Resend
+    </button>
   </p>
 
-  <app-submit-btn [isSubmitting]="isSubmitting()">Verify</app-submit-btn>
+  <app-submit-btn [isResending]="isResending()" [isSubmitting]="isSubmitting()"
+    >Verify</app-submit-btn
+  >
 </form>

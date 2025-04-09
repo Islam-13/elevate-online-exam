@@ -8,4 +8,5 @@ import { Component, input } from '@angular/core';
 })
 export class SubmitBtnComponent {
   isSubmitting = input.required<boolean>();
+  isResending = input<boolean>();
 }

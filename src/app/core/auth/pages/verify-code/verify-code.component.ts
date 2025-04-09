@@ -1,16 +1,17 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, output, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthApiService } from 'authApi';
 import { timer } from 'rxjs';
-import { CtrlErrComponent } from '../../components/ctrl-err/ctrl-err.component';
+
 import { ToastService } from '../../../../shared/services/toast.service';
 import { SubmitBtnComponent } from '../../../../shared/ui/submit-btn/submit-btn.component';
+import { CtrlErrComponent } from '../../../../shared/ui/ctrl-err/ctrl-err.component';
+import { Steps } from '../../../../shared/interfaces/forget-password-steps';
 
 @Component({
   selector: 'app-verify-code',
@@ -21,10 +22,11 @@ import { SubmitBtnComponent } from '../../../../shared/ui/submit-btn/submit-btn.
 export class VerifyCodeComponent {
   form!: FormGroup;
   isSubmitting = signal<boolean>(false);
+  isResending = signal<boolean>(false);
+  steps = output<Steps>();
 
   private _authApi = inject(AuthApiService);
   private _destroyRef = inject(DestroyRef);
-  private _router = inject(Router);
   private _toast = inject(ToastService);
 
   ngOnInit() {
@@ -50,10 +52,11 @@ export class VerifyCodeComponent {
 
       const subscription = this._authApi.verifyCode(this.form.value).subscribe({
         next: (res) => {
-          this._router.navigate(['/auth/set-password']);
           timer(4000).subscribe(() => this._toast.message.set(''));
           this._toast.message.set('Code verified successfully!');
           this._toast.type.set('success');
+
+          this.steps.emit('set-password');
         },
         error: (err) => {
           timer(4000).subscribe(() => this._toast.message.set(''));
@@ -65,6 +68,40 @@ export class VerifyCodeComponent {
         complete: () => {
           this.form.reset();
           this.isSubmitting.set(false);
+        },
+      });
+
+      this._destroyRef.onDestroy(() => subscription.unsubscribe());
+    }
+  }
+
+  onResend() {
+    const email = sessionStorage.getItem('forgetEmail');
+
+    if (!email) {
+      timer(4000).subscribe(() => this._toast.message.set(''));
+      this._toast.type.set('error');
+      this._toast.message.set('Something went wrong, please provide email!');
+      this.steps.emit('forget-password');
+    } else {
+      this.isResending.set(true);
+
+      const subscription = this._authApi.forgetPassword({ email }).subscribe({
+        next: (res) => {
+          timer(4000).subscribe(() => this._toast.message.set(''));
+          this._toast.type.set('success');
+          this._toast.message.set('Code Resent successfully!');
+        },
+        error: (err) => {
+          timer(4000).subscribe(() => this._toast.message.set(''));
+          this._toast.type.set('error');
+          this._toast.message.set(err.message);
+
+          this.isResending.set(false);
+        },
+        complete: () => {
+          this.form.reset();
+          this.isResending.set(false);
         },
       });
 

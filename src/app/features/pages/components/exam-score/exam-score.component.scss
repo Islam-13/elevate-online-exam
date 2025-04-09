@@ -1,0 +1,33 @@
+.chart {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  --transparent: 2%;
+  --incorrect: calc(100% - var(--correct));
+
+  background: conic-gradient(
+    #02369c var(--correct),
+    transparent var(--correct) calc(var(--correct) + var(--transparent)),
+    red calc(var(--correct) + var(--transparent))
+      calc(100% - var(--transparent)),
+    transparent calc(100% - var(--transparent))
+  );
+}
+
+.chart::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 123px;
+  height: 123px;
+  border-radius: 50%;
+  background-color: white;
+}

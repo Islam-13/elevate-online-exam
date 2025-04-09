@@ -15,9 +15,9 @@
 
       @if (emailCtrl?.errors && emailCtrl?.touched) { @if
       (emailCtrl?.getError("required")) {
-      <app-ctrl-err>Email is required!</app-ctrl-err>
+      <app-ctrl-err text="Email is required!" />
       } @else if (emailCtrl?.getError("email")) {
-      <app-ctrl-err>Email is invalid!</app-ctrl-err>
+      <app-ctrl-err text="Email is invalid!" />
       } }
     </div>
 
@@ -48,7 +48,7 @@
 
       @if (passwordCtrl?.errors && passwordCtrl?.touched) { @if
       (passwordCtrl?.getError("required")) {
-      <app-ctrl-err>Password is required!</app-ctrl-err>
+      <app-ctrl-err text="Password is required!" />
       } @else if (passwordCtrl?.getError("pattern")) {
       <app-ctrl-password-err />
       } }

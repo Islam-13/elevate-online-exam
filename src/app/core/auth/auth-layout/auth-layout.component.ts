@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { AuthHeadingComponent } from '../components/auth-heading/auth-heading.component';
+
+import { AuthHeadingComponent } from '../../../shared/ui/auth-heading/auth-heading.component';
+import { NavLink } from '../../../shared/interfaces/nav-link';
 
 @Component({
   selector: 'app-auth-layout',
@@ -9,7 +11,7 @@ import { AuthHeadingComponent } from '../components/auth-heading/auth-heading.co
   styleUrl: './auth-layout.component.scss',
 })
 export class AuthLayoutComponent {
-  icons = [
+  icons: NavLink[] = [
     { name: 'google', src: 'icons/Google.svg', href: 'https://www.google.com' },
     { name: 'x', src: 'icons/X.svg', href: 'https://www.x.com' },
     {

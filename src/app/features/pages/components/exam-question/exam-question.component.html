@@ -1,0 +1,79 @@
+<div class="flex flex-col gap-12">
+  <div>
+    <div class="flex items-center justify-between mb-6">
+      <h4 class="text-main text-sm font-medium">
+        Question {{ currentQ() + 1 }} of {{ numQuestions() }}
+      </h4>
+
+      <div class="flex items-center gap-2">
+        <img src="icons/timer.svg" alt="Timer Icon" />
+        <span
+          class="text-xl"
+          [class]="warningTimer() > 10 ? 'text-[#11CE19]' : 'text-red-600'"
+        >
+          {{ duration() | timer }}
+        </span>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-center gap-[22px] flex-wrap">
+      @for(q of [].constructor(numQuestions()) ; track $index ) {
+      <div
+        class="w-2.5 h-2.5 rounded-full cursor-pointer hover:bg-main"
+        [class]="currentQ() === $index ? 'bg-main' : 'bg-[#D9D9D9]'"
+        (click)="moveQ($index)"
+      ></div>
+      }
+    </div>
+  </div>
+
+  <div>
+    <p class="text-2xl font-medium mb-6">
+      {{ question()?.question }}
+    </p>
+
+    <div class="flex flex-col gap-4">
+      @for (answer of question()?.answers; track $index) {
+      <div
+        class="text-xl py-6 ps-5 rounded-[10px] flex items-center gap-4 cursor-pointer"
+        [class]="answer.key === hasAnswered() ? 'bg-[#CCD7EB]' : 'bg-[#EDEFF3]'"
+        (click)="onSelectAnswer(answer.key)"
+      >
+        <input
+          type="radio"
+          class="w-[20px] h-[20px]"
+          [checked]="answer.key === hasAnswered()"
+        />
+        <label for=""> {{ answer.answer }} </label>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between gap-12">
+    <button
+      (click)="onBack()"
+      [disabled]="currentQ() === 0"
+      class="border border-main rounded-rd-full text-2xl py-2.5 px-6 w-full"
+    >
+      Back
+    </button>
+
+    @if(currentQ() === numQuestions() - 1){
+    <button
+      class="bg-red-600 text-2xl text-white rounded-rd-full py-2.5 px-6 w-full"
+      (click)="onFinish()"
+    >
+      Finish
+    </button>
+    } @else {
+    <button
+      (click)="onNext()"
+      [disabled]="currentQ() === numQuestions() - 1"
+      class="btn-primary text-2xl rounded-rd-full py-2.5 px-6"
+    >
+      Next
+    </button>
+    }
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="flex flex-col gap-6">
+  @for (exam of exams(); track exam._id) {
+
+  <app-exam-item
+    [id]="exam._id"
+    [title]="exam.title"
+    [questionsNum]="exam.numberOfQuestions"
+    [minutes]="exam.duration"
+  />
+  } @empty {
+
+  <app-err-message>
+    <p>There are no exams at the moment, please check later!!</p>
+  </app-err-message>
+  }
+</div>

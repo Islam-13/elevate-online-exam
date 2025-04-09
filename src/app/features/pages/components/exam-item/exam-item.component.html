@@ -1,0 +1,46 @@
+<div
+  class="bg-white py-4 px-6 rounded-[10px] shadow-large flex items-center justify-between"
+>
+  <div class="flex items-center gap-6">
+    <img [src]="`icons/${title()}.svg`" width="70" height="70" alt="" />
+    <div>
+      <p class="font-medium">{{ title() }}</p>
+      <p class="text-[#535353] text-sm">{{ questionsNum() }} Questions</p>
+    </div>
+  </div>
+
+  <div>
+    <p class="text-sm mb-2">{{ minutes() }} Minutes</p>
+    <button
+      (click)="onStart()"
+      class="btn-primary text-sm rounded-rd-sm py-1 px-6"
+    >
+      Start
+    </button>
+  </div>
+</div>
+
+<app-modal #dialog>
+  @if(noData() || error()){
+
+  <div class="bg-white p-6 rounded-rd-md flex flex-col gap-12 items-center">
+    <app-err-message>
+      <p>{{ noData() }}{{ error() }}</p>
+    </app-err-message>
+
+    <button
+      (click)="onCloseModal()"
+      class="border border-main py-2 px-6 max-w-fit rounded-rd-md"
+    >
+      <span>
+        <i class="fa-solid fa-arrow-left"></i>
+      </span>
+
+      <span class="text-xl"> Back </span>
+    </button>
+  </div>
+  } @else {
+
+  <app-exam-steps />
+  }
+</app-modal>

@@ -1,0 +1,13 @@
+<div class="bg-white p-6 shadow-large rounded-rd-md">
+  @if( status() === 'loading'){
+  <p class="min-h-72 grid place-content-center">
+    <span class="loader"></span>
+  </p>
+  } @if(status() === 'ready' ){
+  <app-exam-instructions />
+  } @if(status() === 'active') {
+  <app-exam-question />
+  } @if (status() === 'finished') {
+  <app-exam-score />
+  }
+</div>

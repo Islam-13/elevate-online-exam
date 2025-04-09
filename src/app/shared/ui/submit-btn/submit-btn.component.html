@@ -1,4 +1,7 @@
-<button class="submit-btn" [disabled]="isSubmitting()">
+<button
+  class="btn-primary p-2 mt-10 rounded-rd-md"
+  [disabled]="isSubmitting() || isResending()"
+>
   @if(isSubmitting()) {
   <span class="me-2"><i class="fa-solid fa-spinner animate-spin"></i></span>
   } @else {<span> <ng-content /> </span>}

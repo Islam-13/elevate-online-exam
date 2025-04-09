@@ -1,8 +1,9 @@
 import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { AuthLayoutComponent } from './core/auth/auth-layout/auth-layout.component';
 import { authGuard } from './core/guards/auth/auth.guard';
 import { loggedUserGuard } from './core/guards/auth/logged-user.guard';
+import { AppLayoutComponent } from './shared/ui/app-layout/app-layout.component';
+import { HomeComponent } from './features/pages/home/home.component';
 
 export const routes: Routes = [
   {
@@ -28,24 +29,24 @@ export const routes: Routes = [
         path: 'forget-password',
         loadComponent: () =>
           import(
-            './core/auth/pages/forget-password/forget-password.component'
-          ).then((c) => c.ForgetPasswordComponent),
+            './core/auth/forget-password-steps/forget-password-steps.component'
+          ).then((c) => c.ForgetPasswordStepsComponent),
       },
+    ],
+  },
+  {
+    path: '',
+    canActivate: [authGuard],
+    component: AppLayoutComponent,
+    children: [
+      { path: '', component: HomeComponent },
       {
-        path: 'verify-code',
+        path: 'quizzes/:quizId',
         loadComponent: () =>
-          import('./core/auth/pages/verify-code/verify-code.component').then(
-            (c) => c.VerifyCodeComponent
-          ),
-      },
-      {
-        path: 'set-password',
-        loadComponent: () =>
-          import('./core/auth/pages/set-password/set-password.component').then(
-            (c) => c.SetPasswordComponent
+          import('./features/pages/exams/exams.component').then(
+            (c) => c.ExamsComponent
           ),
       },
     ],
   },
-  { path: '', canActivate: [authGuard], component: AppComponent },
 ];

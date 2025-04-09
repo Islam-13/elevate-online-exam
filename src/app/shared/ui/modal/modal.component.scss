@@ -1,0 +1,37 @@
+dialog {
+  width: min(720px, 94%);
+  margin: auto;
+  background: transparent;
+  opacity: 0;
+  translate: 0 30vh;
+  transition-duration: 1s;
+  transition-behavior: allow-discrete;
+
+  &[open] {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    transition-duration: 1s;
+    transition-behavior: allow-discrete;
+  }
+
+  &[open]::backdrop {
+    opacity: 1;
+  }
+}
+
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+    translate: 0 -30vh;
+  }
+
+  dialog[open]::backdrop {
+    opacity: 0;
+  }
+}
