@@ -1,6 +1,5 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -17,15 +16,7 @@ import { SubmitBtnComponent } from '../../../../shared/ui/submit-btn/submit-btn.
 import { loginAction } from '../../../../store/isLogged-slice/isLogged.actions';
 import { CtrlErrComponent } from '../../../../shared/ui/ctrl-err/ctrl-err.component';
 import { CtrlPasswordErrComponent } from '../../../../shared/ui/ctrl-password-err/ctrl-password-err.component';
-
-function equalValues(form: AbstractControl) {
-  const password = form.get('newPassword')?.value;
-  const rePassword = form.get('rePassword')?.value;
-
-  if (password === rePassword) return null;
-
-  return { misMatch: true };
-}
+import { equalValues } from '../../../../shared/utils/validateRePassword';
 
 @Component({
   selector: 'app-set-password',
@@ -64,7 +55,11 @@ export class SetPasswordComponent implements OnInit {
         ]),
         rePassword: new FormControl('', [Validators.required]),
       },
-      { validators: [equalValues] }
+      {
+        validators: [
+          (control) => equalValues(control, 'newPassword', 'rePassword'),
+        ],
+      }
     );
   }
 
