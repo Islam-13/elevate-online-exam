@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
-import { AuthHeadingComponent } from '../../../shared/ui/auth-heading/auth-heading.component';
-import { NavLink } from '../../../shared/interfaces/nav-link';
+import { AuthHeadingComponent } from '../../shared/ui/auth-heading/auth-heading.component';
+import { NavLink } from '../../shared/interfaces/nav-link';
 
 @Component({
   selector: 'app-auth-layout',
