@@ -5,7 +5,7 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { SearchComponent } from '../search/search.component';
+import { SearchComponent } from '../../shared/ui/search/search.component';
 import { Store } from '@ngrx/store';
 
 @Component({
