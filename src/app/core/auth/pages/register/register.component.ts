@@ -1,6 +1,5 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -15,15 +14,7 @@ import { ToastService } from '../../../../shared/services/toast.service';
 import { SubmitBtnComponent } from '../../../../shared/ui/submit-btn/submit-btn.component';
 import { CtrlErrComponent } from '../../../../shared/ui/ctrl-err/ctrl-err.component';
 import { CtrlPasswordErrComponent } from '../../../../shared/ui/ctrl-password-err/ctrl-password-err.component';
-
-function equalValues(form: AbstractControl) {
-  const password = form.get('password')?.value;
-  const rePassword = form.get('rePassword')?.value;
-
-  if (password === rePassword) return null;
-
-  return { misMatch: true };
-}
+import { equalValues } from '../../../../shared/utils/validateRePassword';
 
 @Component({
   selector: 'app-register',
@@ -80,7 +71,11 @@ export class RegisterComponent {
           Validators.pattern(env.PhoneRG),
         ]),
       },
-      { validators: [equalValues] }
+      {
+        validators: [
+          (control) => equalValues(control, 'password', 'rePassword'),
+        ],
+      }
     );
   }
 
