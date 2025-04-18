@@ -13,9 +13,7 @@ export class QuizzesService {
 
   getQuizzes() {
     return this._http
-      .get<QuizzesRes>('https://exam.elevateegy.com/api/v1/subjects?limit=6', {
-        headers: { token: localStorage.getItem('loggedToken')! },
-      })
+      .get<QuizzesRes>('https://exam.elevateegy.com/api/v1/subjects?limit=6')
       .pipe(
         map((res) => res.subjects),
         catchError((err) =>
@@ -31,9 +29,7 @@ export class QuizzesService {
 
   getAllQuizzes() {
     return this._http
-      .get<QuizzesRes>('https://exam.elevateegy.com/api/v1/subjects', {
-        headers: { token: localStorage.getItem('loggedToken')! },
-      })
+      .get<QuizzesRes>('https://exam.elevateegy.com/api/v1/subjects')
       .pipe(
         map((res) => res.subjects),
         catchError((err) =>
@@ -49,9 +45,7 @@ export class QuizzesService {
 
   getExamsOfQuiz(id: string) {
     return this._http
-      .get<ExamRes>(`https://exam.elevateegy.com/api/v1/exams?subject=${id}`, {
-        headers: { token: localStorage.getItem('loggedToken')! },
-      })
+      .get<ExamRes>(`https://exam.elevateegy.com/api/v1/exams?subject=${id}`)
       .pipe(
         map((res) => res.exams),
         catchError((err) =>
@@ -68,10 +62,7 @@ export class QuizzesService {
   getQuestionsOfExam(examId: string) {
     return this._http
       .get<QuestionsRes>(
-        `https://exam.elevateegy.com/api/v1/questions?exam=${examId}`,
-        {
-          headers: { token: localStorage.getItem('loggedToken')! },
-        }
+        `https://exam.elevateegy.com/api/v1/questions?exam=${examId}`
       )
       .pipe(
         map((res) => res.questions),
