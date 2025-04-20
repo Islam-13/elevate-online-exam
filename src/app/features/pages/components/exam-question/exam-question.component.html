@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-12">
+<div class="flex flex-col justify-between gap-12 h-[min(535px,100vh)]">
   <div>
     <div class="flex items-center justify-between mb-6">
       <h4 class="text-main text-sm font-medium">
@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="h-auto overflow-auto">
     <p class="text-2xl font-medium mb-6">
       {{ question()?.question }}
     </p>
@@ -63,6 +63,7 @@
     <button
       class="bg-red-600 text-2xl text-white rounded-rd-full py-2.5 px-6 w-full"
       (click)="onFinish()"
+      [disabled]="numAnswered() < numQuestions()"
     >
       Finish
     </button>

@@ -27,7 +27,11 @@ export const examQuestionsReducer = createReducer(
   on(actions.getData, (state, { value }) => ({
     ...state,
     questions: value,
-    answers: Array(value.length).fill({ choosedAnswer: '', correct: 0 }),
+    answers: Array(value.length).fill({
+      choosedAnswer: '',
+      correct: 0,
+      answered: 0,
+    }),
     numQuestions: value.length,
     status: 'ready',
     duration: value[0].exam.duration * 60,

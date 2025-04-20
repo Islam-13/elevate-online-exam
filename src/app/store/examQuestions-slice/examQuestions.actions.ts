@@ -10,7 +10,7 @@ export const startQuiz = createAction('[examQuestions] startQuiz');
 
 export const answerQ = createAction(
   '[examQuestions] answerQ',
-  props<{ choosedAnswer: string; correct: Number }>()
+  props<{ choosedAnswer: string; correct: Number; answered: number }>()
 );
 
 export const nextQ = createAction('[examQuestions] nextQ');

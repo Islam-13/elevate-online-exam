@@ -25,6 +25,7 @@ export class ExamQuestionComponent implements OnInit, OnDestroy {
   duration = signal<number>(0);
   totalTime = signal<number>(0);
   numQuestions = signal<number>(0);
+  numAnswered = signal<number>(0);
   hasAnswered = signal<string>('');
   warningTimer = signal<number>(11);
 
@@ -36,6 +37,12 @@ export class ExamQuestionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const subscription = this._store.select('examQuestions').subscribe({
       next: ({ questions, answers, currentQ, numQuestions, duration }) => {
+        const allAnswered = answers.reduce(
+          (acc: any, curr: any) => acc + curr.answered,
+          0
+        );
+
+        this.numAnswered.set(allAnswered);
         this.currentQ.set(currentQ);
         this.numQuestions.set(numQuestions);
         this.question.set(questions.at(currentQ));
@@ -67,18 +74,25 @@ export class ExamQuestionComponent implements OnInit, OnDestroy {
   onAnswer() {
     if (this.hasAnswered() === this.question()?.correct) {
       this._store.dispatch(
-        Actions.answerQ({ choosedAnswer: this.hasAnswered(), correct: 1 })
+        Actions.answerQ({
+          choosedAnswer: this.hasAnswered(),
+          correct: 1,
+          answered: 1,
+        })
       );
     } else
       this._store.dispatch(
-        Actions.answerQ({ choosedAnswer: this.hasAnswered(), correct: 0 })
+        Actions.answerQ({
+          choosedAnswer: this.hasAnswered(),
+          correct: 0,
+          answered: 1,
+        })
       );
   }
 
   onNext() {
     if (this.currentQ() === this.numQuestions() - 1) return;
 
-    this.onAnswer();
     this._store.dispatch(Actions.nextQ());
   }
 
@@ -90,6 +104,8 @@ export class ExamQuestionComponent implements OnInit, OnDestroy {
 
   onSelectAnswer(key: string) {
     this.hasAnswered.set(key);
+
+    this.onAnswer();
   }
 
   moveQ(index: number) {
@@ -97,7 +113,6 @@ export class ExamQuestionComponent implements OnInit, OnDestroy {
   }
 
   onFinish() {
-    this.onAnswer();
     this._store.dispatch(Actions.finishQ());
   }
 
