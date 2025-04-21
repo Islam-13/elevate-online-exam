@@ -1,8 +1,17 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  output,
+  signal,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { resetQ } from '../../../../store/examQuestions-slice/examQuestions.actions';
+import {
+  resetQ,
+  showResults,
+} from '../../../../store/examQuestions-slice/examQuestions.actions';
 
 @Component({
   selector: 'app-exam-score',
@@ -14,16 +23,16 @@ export class ExamScoreComponent implements OnInit {
   incorrectAnswers = signal<number>(0);
   percentage = signal<number>(0);
   chart = signal<string>('');
+  closeModal = output();
 
   private _store = inject(Store);
-  private _router = inject(Router);
   private _destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     const subscription = this._store.select('examQuestions').subscribe({
       next: ({ answers, numQuestions }) => {
         const correct = answers.reduce(
-          (acc: any, curr: any) => acc + curr.correct,
+          (acc: any, curr: any) => acc + curr.isCorrect,
           0
         );
 
@@ -41,7 +50,11 @@ export class ExamScoreComponent implements OnInit {
   }
 
   onBack() {
-    this._router.navigate(['/']);
+    this.closeModal.emit();
     this._store.dispatch(resetQ());
+  }
+
+  onShowResults() {
+    this._store.dispatch(showResults());
   }
 }

@@ -10,7 +10,14 @@ export const startQuiz = createAction('[examQuestions] startQuiz');
 
 export const answerQ = createAction(
   '[examQuestions] answerQ',
-  props<{ choosedAnswer: string; correct: Number }>()
+  props<{
+    question: string;
+    allAnswers: {}[];
+    correctAnswer: string;
+    choosedAnswer: string;
+    isCorrect: number;
+    isAnswered: number;
+  }>()
 );
 
 export const nextQ = createAction('[examQuestions] nextQ');
@@ -23,5 +30,7 @@ export const moveQ = createAction(
 );
 
 export const finishQ = createAction('[examQuestions] finishQ');
+
+export const showResults = createAction('[examQuestions] showResults');
 
 export const resetQ = createAction('[examQuestions] resetQ');

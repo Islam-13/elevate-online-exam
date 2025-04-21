@@ -27,6 +27,7 @@ button {
 
   &:disabled {
     cursor: not-allowed;
+    filter: grayscale(75%);
   }
 }
 
@@ -43,7 +44,7 @@ input.ng-invalid.ng-touched {
 }
 
 .btn-primary {
-  @apply bg-main text-white w-full disabled:grayscale-75 hover:bg-blue-700 duration-500;
+  @apply bg-main text-white w-full hover:bg-blue-700 duration-500;
 }
 
 .active {
