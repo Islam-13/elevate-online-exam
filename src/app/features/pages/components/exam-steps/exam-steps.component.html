@@ -8,6 +8,8 @@
   } @if(status() === 'active') {
   <app-exam-question />
   } @if (status() === 'finished') {
-  <app-exam-score />
+  <app-exam-score (closeModal)="onCloseModal()" />
+  } @if (status() === 'showResults') {
+  <app-exam-results (closeModal)="onCloseModal()" />
   }
 </div>

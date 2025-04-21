@@ -38,7 +38,7 @@ export class ExamQuestionComponent implements OnInit, OnDestroy {
     const subscription = this._store.select('examQuestions').subscribe({
       next: ({ questions, answers, currentQ, numQuestions, duration }) => {
         const allAnswered = answers.reduce(
-          (acc: any, curr: any) => acc + curr.answered,
+          (acc: any, curr: any) => acc + curr.isAnswered,
           0
         );
 
@@ -75,17 +75,23 @@ export class ExamQuestionComponent implements OnInit, OnDestroy {
     if (this.hasAnswered() === this.question()?.correct) {
       this._store.dispatch(
         Actions.answerQ({
+          question: this.question()?.question!,
+          allAnswers: this.question()?.answers!,
+          correctAnswer: this.question()?.correct!,
           choosedAnswer: this.hasAnswered(),
-          correct: 1,
-          answered: 1,
+          isCorrect: 1,
+          isAnswered: 1,
         })
       );
     } else
       this._store.dispatch(
         Actions.answerQ({
+          question: this.question()?.question!,
+          allAnswers: this.question()?.answers!,
+          correctAnswer: this.question()?.correct!,
           choosedAnswer: this.hasAnswered(),
-          correct: 0,
-          answered: 1,
+          isCorrect: 0,
+          isAnswered: 1,
         })
       );
   }

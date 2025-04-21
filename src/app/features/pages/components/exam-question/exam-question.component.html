@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-between gap-12 h-[min(535px,100vh)]">
+<div class="flex flex-col justify-between gap-12 max-h-[85dvh]">
   <div>
     <div class="flex items-center justify-between mb-6">
       <h4 class="text-main text-sm font-medium">
@@ -35,7 +35,7 @@
     <div class="flex flex-col gap-4">
       @for (answer of question()?.answers; track $index) {
       <div
-        class="text-xl py-6 ps-5 rounded-[10px] flex items-center gap-4 cursor-pointer"
+        class="text-xl py-6 ps-5 rounded-rd-sm flex items-center gap-4 cursor-pointer"
         [class]="answer.key === hasAnswered() ? 'bg-[#CCD7EB]' : 'bg-[#EDEFF3]'"
         (click)="onSelectAnswer(answer.key)"
       >

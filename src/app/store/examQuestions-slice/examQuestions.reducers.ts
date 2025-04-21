@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { Question } from '../../features/interfaces/questions';
 import * as actions from './examQuestions.actions';
+import { Answer } from '../../features/interfaces/answer';
 
 interface State {
   questions: Question[];
@@ -28,9 +29,12 @@ export const examQuestionsReducer = createReducer(
     ...state,
     questions: value,
     answers: Array(value.length).fill({
+      question: '',
+      allAnswers: [],
+      correctAnswer: '',
       choosedAnswer: '',
-      correct: 0,
-      answered: 0,
+      isCorrect: 0,
+      isAnswered: 0,
     }),
     numQuestions: value.length,
     status: 'ready',
@@ -54,13 +58,7 @@ export const examQuestionsReducer = createReducer(
 
   on(actions.finishQ, (state) => ({ ...state, status: 'finished' })),
 
-  on(actions.resetQ, () => ({
-    questions: [],
-    answers: [],
-    numQuestions: 0,
-    status: 'loading',
-    currentQ: 0,
-    score: 0,
-    duration: 0,
-  }))
+  on(actions.showResults, (state) => ({ ...state, status: 'showResults' })),
+
+  on(actions.resetQ, () => initialState)
 );
