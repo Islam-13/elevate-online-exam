@@ -1,37 +1,40 @@
-<div
-  class="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-10 max-h-[85dvh] overflow-auto"
->
-  @for (item of questions(); track $index) {
+<div class="max-h-[85dvh]">
+  <div
+    class="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-10 max-h-[75dvh] overflow-auto"
+  >
+    @for (item of questions(); track $index) {
 
-  <div class="py-4 px-2 flex flex-col gap-4 bg-[#F9F9F9] rounded-rd-sm">
-    <p class="text-2xl font-medium">{{ item.question }}</p>
+    <div class="py-4 px-2 flex flex-col gap-4 bg-[#F9F9F9] rounded-rd-sm">
+      <p class="text-2xl font-medium">{{ item.question }}</p>
 
-    @for(answer of item.allAnswers; track $index) {
+      @for(answer of item.allAnswers; track $index) {
 
-    <div
-      class="text-xl py-4 ps-2 rounded-[10px] flex items-center gap-4 overflow-auto"
-      [class]="
-        answer?.key === item.correctAnswer
-          ? 'bg-[#CAF9CC] border border-[#11CE19]'
-          : answer.key == item.choosedAnswer
-          ? 'bg-[#F8D2D2] border border-[#CC1010]'
-          : 'bg-[#EDEFF3]'
-      "
-    >
-      <input
-        disabled
-        type="radio"
-        class="w-[20px] h-[20px]"
-        [checked]="answer.key == item.choosedAnswer"
-      />
-      <label for=""> {{ answer?.answer }} </label>
+      <div
+        class="text-xl py-4 ps-2 rounded-[10px] flex items-center gap-4 overflow-auto"
+        [class]="
+          answer?.key === item.correctAnswer
+            ? 'bg-[#CAF9CC] border border-[#11CE19]'
+            : answer.key == item.choosedAnswer
+            ? 'bg-[#F8D2D2] border border-[#CC1010]'
+            : 'bg-[#EDEFF3]'
+        "
+      >
+        <input
+          disabled
+          type="radio"
+          class="w-[20px] h-[20px]"
+          [checked]="answer.key == item.choosedAnswer"
+        />
+        <label for=""> {{ answer?.answer }} </label>
+      </div>
+
+      }
     </div>
-
     }
   </div>
-  }
+
   <button
-    class="btn-primary rounded-rd-sm py-2 px-6 text-lg font-medium max-h-10 place-self-end"
+    class="btn-primary rounded-rd-sm py-2 px-6 text-lg font-medium mt-4"
     (click)="onClose()"
   >
     Close
