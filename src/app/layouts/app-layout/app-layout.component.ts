@@ -5,8 +5,9 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { SearchComponent } from '../../shared/ui/search/search.component';
 import { Store } from '@ngrx/store';
+
+import { SearchComponent } from '@shared/ui/search/search.component';
 
 @Component({
   selector: 'app-app-layout',

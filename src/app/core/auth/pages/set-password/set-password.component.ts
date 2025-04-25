@@ -11,12 +11,12 @@ import { Store } from '@ngrx/store';
 import { timer } from 'rxjs';
 
 import { env } from '../../../../env/env.dev';
-import { ToastService } from '../../../../shared/services/toast.service';
-import { SubmitBtnComponent } from '../../../../shared/ui/submit-btn/submit-btn.component';
 import { loginAction } from '../../../../store/isLogged-slice/isLogged.actions';
-import { CtrlErrComponent } from '../../../../shared/ui/ctrl-err/ctrl-err.component';
-import { CtrlPasswordErrComponent } from '../../../../shared/ui/ctrl-password-err/ctrl-password-err.component';
-import { equalValues } from '../../../../shared/utils/validateRePassword';
+import { ToastService } from '@shared/services/toast.service';
+import { SubmitBtnComponent } from '@shared/ui/submit-btn/submit-btn.component';
+import { CtrlErrComponent } from '@shared/ui/ctrl-err/ctrl-err.component';
+import { CtrlPasswordErrComponent } from '@shared/ui/ctrl-password-err/ctrl-password-err.component';
+import { equalValues } from '@shared/utils/validateRePassword';
 
 @Component({
   selector: 'app-set-password',

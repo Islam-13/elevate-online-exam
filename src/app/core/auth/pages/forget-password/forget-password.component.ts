@@ -15,10 +15,10 @@ import {
 import { AuthApiService } from 'authApi';
 import { timer } from 'rxjs';
 
-import { ToastService } from '../../../../shared/services/toast.service';
-import { SubmitBtnComponent } from '../../../../shared/ui/submit-btn/submit-btn.component';
-import { CtrlErrComponent } from '../../../../shared/ui/ctrl-err/ctrl-err.component';
-import { Steps } from '../../../../shared/interfaces/forget-password-steps';
+import { ToastService } from '@shared/services/toast.service';
+import { SubmitBtnComponent } from '@shared/ui/submit-btn/submit-btn.component';
+import { CtrlErrComponent } from '@shared/ui/ctrl-err/ctrl-err.component';
+import { Steps } from '@shared/interfaces/forget-password-steps';
 
 @Component({
   selector: 'app-forget-password',
