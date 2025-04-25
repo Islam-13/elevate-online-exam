@@ -1,16 +1,12 @@
 export class AuthEndPoint {
-  static SIGNUP = 'https://exam.elevateegy.com/api/v1/auth/signup';
-  static SIGNIN = 'https://exam.elevateegy.com/api/v1/auth/signin';
-  static CHANGE_PASSWORD =
-    'https://exam.elevateegy.com/api/v1/auth/changePassword';
-  static DELETE_ACCOUNT = 'https://exam.elevateegy.com/api/v1/auth/deleteMe';
-  static EDIT_PROFILE = 'https://exam.elevateegy.com/api/v1/auth/editProfile';
-  static LOGOUT = 'https://exam.elevateegy.com/api/v1/auth/logout';
-  static FORGET_PASSWORD =
-    'https://exam.elevateegy.com/api/v1/auth/forgotPassword';
-  static VERIFY_CODE =
-    'https://exam.elevateegy.com/api/v1/auth/verifyResetCode';
-  static RESET_PASSWORD =
-    'https://exam.elevateegy.com/api/v1/auth/resetPassword';
-  static PROFILE_DATA = 'https://exam.elevateegy.com/api/v1/auth/profileData';
+  static SIGNUP = '/auth/signup';
+  static SIGNIN = '/auth/signin';
+  static LOGOUT = '/auth/logout';
+  static CHANGE_PASSWORD = '/auth/changePassword';
+  static FORGET_PASSWORD = '/auth/forgotPassword';
+  static RESET_PASSWORD = '/auth/resetPassword';
+  static VERIFY_CODE = '/auth/verifyResetCode';
+  static DELETE_ACCOUNT = '/auth/deleteMe';
+  static EDIT_PROFILE = '/auth/editProfile';
+  static PROFILE_DATA = '/auth/profileData';
 }
