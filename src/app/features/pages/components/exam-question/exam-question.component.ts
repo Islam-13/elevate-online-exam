@@ -9,9 +9,9 @@ import {
 import { interval, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import * as Actions from '../../../../store/examQuestions-slice/examQuestions.actions';
+import * as Actions from '@examStore/examQuestions.actions';
+import { TimerPipe } from '@shared/utils/timer.pipe';
 import { Question } from '../../../interfaces/questions';
-import { TimerPipe } from '../../../../shared/utils/timer.pipe';
 
 @Component({
   selector: 'app-exam-question',

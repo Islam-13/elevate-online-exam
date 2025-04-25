@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { startQuiz } from '../../../../store/examQuestions-slice/examQuestions.actions';
+import { startQuiz } from '@examStore/examQuestions.actions';
 
 @Component({
   selector: 'app-exam-instructions',

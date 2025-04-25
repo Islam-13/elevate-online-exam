@@ -9,10 +9,10 @@ import {
 import { Store } from '@ngrx/store';
 
 import { ExamStepsComponent } from '../exam-steps/exam-steps.component';
-import { ModalComponent } from '../../../../shared/ui/modal/modal.component';
 import { QuizzesService } from '../../../services/quizzes.service';
-import { getData } from '../../../../store/examQuestions-slice/examQuestions.actions';
-import { ErrMessageComponent } from '../../../../shared/ui/err-message/err-message.component';
+import { getData } from '@examStore/examQuestions.actions';
+import { ModalComponent } from '@shared/ui/modal/modal.component';
+import { ErrMessageComponent } from '@shared/ui/err-message/err-message.component';
 
 @Component({
   selector: 'app-exam-item',

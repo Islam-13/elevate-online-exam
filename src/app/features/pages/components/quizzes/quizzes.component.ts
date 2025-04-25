@@ -1,12 +1,9 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 
+import { callingApi, callingApiEnd } from '@loadStore/isLoading.actions';
 import { QuizCardComponent } from '../quiz-card/quiz-card.component';
 import { QuizzesService } from '../../../services/quizzes.service';
-import {
-  callingApi,
-  callingApiEnd,
-} from '../../../../store/isLoading-slice/isLoading.actions';
 import { Quiz } from '../../../interfaces/quizzes';
 
 @Component({

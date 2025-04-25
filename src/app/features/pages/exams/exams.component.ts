@@ -8,14 +8,11 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import {
-  callingApi,
-  callingApiEnd,
-} from '../../../store/isLoading-slice/isLoading.actions';
+import { callingApi, callingApiEnd } from '@loadStore/isLoading.actions';
 import { Exam } from '../../interfaces/exam';
 import { QuizzesService } from '../../services/quizzes.service';
 import { ExamItemComponent } from '../components/exam-item/exam-item.component';
-import { ErrMessageComponent } from '../../../shared/ui/err-message/err-message.component';
+import { ErrMessageComponent } from '@shared/ui/err-message/err-message.component';
 
 @Component({
   selector: 'app-exams',

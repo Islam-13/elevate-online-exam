@@ -7,8 +7,9 @@ import {
   signal,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
+
+import { resetQ } from '@examStore/examQuestions.actions';
 import { Answer } from '../../../interfaces/answer';
-import { resetQ } from '../../../../store/examQuestions-slice/examQuestions.actions';
 
 @Component({
   selector: 'app-exam-results',

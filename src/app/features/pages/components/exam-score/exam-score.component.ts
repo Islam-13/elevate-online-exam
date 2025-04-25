@@ -8,10 +8,7 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import {
-  resetQ,
-  showResults,
-} from '../../../../store/examQuestions-slice/examQuestions.actions';
+import { resetQ, showResults } from '@examStore/examQuestions.actions';
 
 @Component({
   selector: 'app-exam-score',
